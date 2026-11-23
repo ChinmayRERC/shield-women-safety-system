@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-obsidian-950 text-slate-100 antialiased font-sans;
+    background-image: 
+      radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, #04070F, #070A14);
+    background-size: 28px 28px, 100% 100%;
+    background-attachment: fixed;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
+  }
+}
+
+/* Engineered Tactical UI Classes */
+@layer components {
+  .tactical-card {
+    @apply bg-obsidian-900/90 border border-white/[0.08] rounded-2xl shadow-tactile backdrop-blur-xl transition-all duration-200;
+  }
+  
+  .tactical-card-interactive {
+    @apply bg-obsidian-900/90 border border-white/[0.08] hover:border-white/[0.18] rounded-2xl shadow-tactile hover:shadow-tactile-lg backdrop-blur-xl transition-all duration-200;
+  }
+
+  .tactical-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-semibold border;
+  }
+}
+
+/* Custom Leaflet Styling */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #070A14 !important;
+  font-family: inherit;
+}
+
+.custom-leaflet-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #0B101F !important;
+  color: #F8FAFC !important;
+  border: 1px solid rgba(0, 240, 255, 0.35) !important;
+  border-radius: 0.875rem !important;
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.8) !important;
+  padding: 0.25rem !important;
+}
+
+.leaflet-popup-tip {
+  background: #0B101F !important;
+  border: 1px solid rgba(0, 240, 255, 0.35) !important;
+}
+
+.leaflet-popup-content {
+  margin: 10px 14px !important;
+  line-height: 1.4 !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #04070F;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #151E38;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00F0FF;
+}
+
+/* Custom animations */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: scale(0.985); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade {
+  animation: fade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
