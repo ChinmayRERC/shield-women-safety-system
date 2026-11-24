@@ -36,6 +36,10 @@ interface SafetyContextType {
   activeTab: string;
   setActiveTab: (tab: string) => void;
 
+  // Plain-English help guide
+  isGuideOpen: boolean;
+  setGuideOpen: (open: boolean) => void;
+
   userLocation: GeoLocation;
   refreshLocation: () => Promise<void>;
   setUserLocation: (loc: GeoLocation) => void;
@@ -121,6 +125,7 @@ const SafetyContext = createContext<SafetyContextType | null>(null);
 
 export const SafetyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeTab, setActiveTab] = useState<string>('landing');
+  const [isGuideOpen, setGuideOpen] = useState<boolean>(false);
 
   // Location State
   const [userLocation, setUserLocation] = useState<GeoLocation>({
@@ -708,6 +713,8 @@ export const SafetyProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       value={{
         activeTab,
         setActiveTab,
+        isGuideOpen,
+        setGuideOpen,
 
         userLocation,
         refreshLocation,

@@ -12,10 +12,10 @@ export const SimulationBanner: React.FC = () => {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-400"></span>
           </span>
           <span className="text-teal-300 font-bold uppercase tracking-wider text-[10px] bg-teal-500/10 px-2 py-0.5 rounded border border-teal-500/30">
-            SYS: SIMULATION_HARNESS_V2
+            DEMO MODE
           </span>
           <span className="text-slate-400 hidden sm:inline">
-            Telemetry, CAD dispatch, and SMS events execute in offline edge sandbox.
+            This is a practice app — alerts, sensors and messages are simulated on your device.
           </span>
         </div>
 
@@ -23,12 +23,12 @@ export const SimulationBanner: React.FC = () => {
         <div className="flex items-center gap-3 text-slate-400 text-[10px]">
           <span className="flex items-center gap-1 text-slate-300">
             <ShieldCheck className="w-3.5 h-3.5 text-teal-400" />
-            <span>ENCRYPTED CLIENT DATA</span>
+            <span>DATA STAYS ON THIS DEVICE</span>
           </span>
           <span className="text-slate-700">|</span>
           <span className="flex items-center gap-1 text-amber-400 font-medium">
             <AlertCircle className="w-3.5 h-3.5" />
-            <span>REAL 112/911 DISCONNECTED</span>
+            <span>NO REAL EMERGENCY CALL IS MADE</span>
           </span>
         </div>
       </div>

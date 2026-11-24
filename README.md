@@ -78,6 +78,17 @@ npm run build
 npm run preview
 ```
 
+### 3. New to the app?
+Click the **?** (Help) button in the top bar, or "New here? Start here" on the Home screen, for a plain-English two-minute tour. Every screen also has simple labels with hover hints.
+
+### 4. Connecting real hardware (ESP8266 + buzzer + LED + switch + battery)
+1. Wire the parts following the chart in the app: **Sensors → Connect your ESP8266**.
+2. Start the local bridge: `npm run bridge` (keeps port 3003 open).
+3. Open **Sensors → Connect your ESP8266**, enter the bridge address and press **Start listening for my device**.
+4. Flash the ESP8266 with the sketch in [`public/HARDWARE_GUIDE.md`](public/HARDWARE_GUIDE.md), using your Wi-Fi details and the bridge computer's IP.
+
+The bridge accepts `POST /telemetry` from the device (battery, switch, fall/shake) and exposes `GET /command` so the app can switch the buzzer and LED on during an SOS. Full wiring, sketch, and troubleshooting steps are in the guide.
+
 ---
 
 ## ⚖️ Hackathon Demonstration & Ethics Disclaimer

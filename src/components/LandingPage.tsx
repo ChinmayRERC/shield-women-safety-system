@@ -6,16 +6,12 @@ import {
   Cpu,
   Radio,
   ArrowRight,
-  Terminal,
-  Compass,
   Zap,
   PhoneCall,
   HeartPulse,
   Navigation,
-  Lock,
   Layers,
   ChevronRight,
-  Eye,
   Sliders,
   AlertTriangle,
 } from 'lucide-react';
@@ -28,6 +24,7 @@ export const LandingPage: React.FC = () => {
     triggerFakeCall,
     simulateFallEvent,
     simulateStruggleEvent,
+    setGuideOpen,
     riskAnalysis,
     iotData,
     userLocation,
@@ -40,87 +37,70 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="space-y-10 pb-16">
-      {/* Top Engineering Mission Header */}
+      {/* Simple welcome header */}
       <section className="relative pt-6 sm:pt-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Subtle grid background accent */}
         <div className="absolute inset-0 bg-[radial-gradient(#00F0FF_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
 
-        {/* Tactical Sub-header bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-white/[0.08] text-[11px] font-mono text-slate-400">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-white/[0.08] text-xs text-slate-400">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-            <span className="text-white font-bold tracking-wider">PROJECT SHIELD</span>
-            <span className="text-slate-600">/</span>
-            <span>SPEC: RAPID-CAD-MESH-V2</span>
-            <span className="text-slate-600">/</span>
-            <span className="text-teal-300">STAGE: READY</span>
+            <span className="text-white font-bold">SHIELD safety demo</span>
+            <span className="text-slate-600">·</span>
+            <span className="text-teal-300">Ready to try</span>
           </div>
-          <div className="flex items-center gap-4">
-            <span>EDGE LATENCY: <strong className="text-teal-300">18ms</strong></span>
-            <span className="hidden sm:inline text-slate-600">|</span>
-            <span className="hidden sm:inline">GPS FIX: <strong className="text-emerald-400">LOCKED</strong></span>
-            <span className="hidden sm:inline text-slate-600">|</span>
-            <span>CAD FLEET: <strong className="text-white">{readyResponderCount} ON STANDBY</strong></span>
+          <div className="flex flex-wrap items-center gap-4">
+            <span>Location: <strong className="text-teal-300">on</strong></span>
+            <span>Helpers ready: <strong className="text-white">{readyResponderCount}</strong></span>
+            <button
+              onClick={() => setGuideOpen(true)}
+              className="rounded-lg border border-teal-500/40 bg-teal-500/10 px-2.5 py-1 font-semibold text-teal-200 hover:bg-teal-500/20"
+            >
+              New here? Start here →
+            </button>
           </div>
         </div>
 
-        {/* Hero Section */}
-        <div className="pt-8 pb-4 space-y-6">
+        {/* Plain-language hero */}
+        <div className="pt-8 pb-4 space-y-5">
           <div className="max-w-4xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/[0.04] border border-white/[0.1] text-xs font-mono text-teal-300">
-              <Terminal className="w-3.5 h-3.5 text-teal-400" />
-              <span>AUTONOMOUS EMERGENCY ORCHESTRATION PLATFORM</span>
-            </div>
-
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1] uppercase font-sans">
-              Next-Gen Autonomous <br />
-              <span className="text-teal-400 font-mono tracking-tighter">Women's Safety</span> & CAD Grid
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1]">
+              Stay safe with one <span className="text-teal-400">tap</span>.
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-3xl font-sans">
-              SHIELD eliminates emergency response latency through automated multi-modal telemetry.
-              It synthesizes wearable 3.8G shock sensors, explainable Bayesian-calibrated spatial threat scoring,
-              and direct municipal Computer-Aided Dispatch (CAD) into a unified, zero-cost edge network.
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl">
+              SHIELD is a practice safety app. Press <strong className="text-white">SOS</strong> to send an
+              alert with your location, use <strong className="text-white">Safe Walk</strong> while you
+              travel, or connect your own <strong className="text-white">ESP8266</strong> wearable. Everything
+              runs on this device — no real emergency services are contacted.
             </p>
           </div>
 
-          {/* Primary Quick Launch Deck */}
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
+              onClick={() => setGuideOpen(true)}
+              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-teal-accent hover:bg-teal-400 text-obsidian-950 font-bold text-sm transition-all shadow-glow-teal hover:-translate-y-px"
+            >
+              Start here — 2 minute guide
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <button
               onClick={() => setActiveTab('user')}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-teal-accent hover:bg-teal-400 text-obsidian-950 font-bold text-xs font-mono tracking-wider transition-all shadow-glow-teal hover:translate-y-[-1px] active:translate-y-[0px]"
+              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm transition-all shadow-tactile"
             >
-              <span>LAUNCH SAFETY TERMINAL</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              Try the SOS button
             </button>
-
             <button
-              onClick={() => setActiveTab('admin')}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-obsidian-900 hover:bg-obsidian-850 text-white font-bold text-xs font-mono tracking-wider border border-white/[0.12] hover:border-teal-500/40 transition-all shadow-tactile"
+              onClick={() => setActiveTab('iot')}
+              className="flex items-center gap-2 px-4 py-3 rounded-xl bg-obsidian-900 hover:bg-obsidian-850 text-slate-200 font-semibold text-sm border border-white/10 hover:border-teal-500/40 transition-all"
             >
-              <Activity className="w-3.5 h-3.5 text-rose-400" />
-              <span>OPEN POLICE CAD CONSOLE</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('map')}
-              className="flex items-center gap-2 px-4 py-3 rounded-xl bg-obsidian-900 hover:bg-obsidian-850 text-slate-300 hover:text-white font-medium text-xs font-mono tracking-wider border border-white/[0.08] hover:border-white/[0.18] transition-all"
-            >
-              <Compass className="w-3.5 h-3.5 text-teal-400" />
-              <span>SPATIAL TACTICAL MAP</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('pitch')}
-              className="flex items-center gap-2 px-4 py-3 rounded-xl bg-obsidian-900 hover:bg-obsidian-850 text-slate-300 hover:text-white font-medium text-xs font-mono tracking-wider border border-white/[0.08] hover:border-white/[0.18] transition-all"
-            >
-              <span>EVALUATOR MATRIX</span>
+              Connect hardware
             </button>
           </div>
         </div>
       </section>
 
-      {/* Real-Time Mission Telemetry HUD (4 Monitors) */}
+      {/* Simple status overview */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
           {/* Monitor 1: GPS & Location Lock */}
@@ -131,10 +111,10 @@ export const LandingPage: React.FC = () => {
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
               <span className="flex items-center gap-1.5">
                 <Navigation className="w-3.5 h-3.5 text-teal-400" />
-                <span>GPS TELEMETRY</span>
+                <span>Your location</span>
               </span>
               <span className="text-[10px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
-                ACTIVE FIX
+                ON
               </span>
             </div>
             <div className="mt-3">
@@ -142,11 +122,11 @@ export const LandingPage: React.FC = () => {
                 {userLocation.lat.toFixed(4)}° N, {userLocation.lng.toFixed(4)}° E
               </div>
               <div className="text-[11px] text-slate-400 font-mono mt-0.5">
-                Precision: ±4m • NavIC / GPS Dual Lock
+                Accuracy: about 4 metres
               </div>
             </div>
             <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-teal-300 group-hover:text-teal-200">
-              <span>Inspect spatial corridors</span>
+              <span>See it on the map</span>
               <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
             </div>
           </div>
@@ -159,14 +139,14 @@ export const LandingPage: React.FC = () => {
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
               <span className="flex items-center gap-1.5">
                 <Radio className="w-3.5 h-3.5 text-teal-400" />
-                <span>WEARABLE SENSOR BUS</span>
+                <span>Sensor device</span>
               </span>
               <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${
                 iotData.connected
                   ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
                   : 'text-slate-500 bg-white/[0.02] border-white/[0.08]'
               }`}>
-                {iotData.connected ? 'BLE 5.2 GATT' : 'OFFLINE'}
+                {iotData.connected ? 'CONNECTED' : 'NOT CONNECTED'}
               </span>
             </div>
             <div className="mt-3">
@@ -174,20 +154,20 @@ export const LandingPage: React.FC = () => {
                 <span className="text-lg font-bold font-mono text-white tracking-tight">
                   {iotData.connected ? `${iotData.heartRate} BPM` : '-- BPM'}
                 </span>
-                <span className="text-xs font-mono text-slate-400">
-                  | {iotData.accelerometer.magnitude} G
+                <span className="text-xs text-slate-400">
+                  movement {iotData.accelerometer.magnitude} G
                 </span>
               </div>
-              <div className="text-[11px] text-slate-400 font-mono mt-0.5">
+              <div className="text-[11px] text-slate-400 mt-0.5">
                 {iotData.fallDetected ? (
-                  <strong className="text-rose-400">IMPACT FLAGGED</strong>
+                  <strong className="text-rose-400">Fall detected!</strong>
                 ) : (
-                  '250Hz Photoplethysmography Nominal'
+                  'Heartbeat looks normal'
                 )}
               </div>
             </div>
             <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-teal-300 group-hover:text-teal-200">
-              <span>Open oscilloscope testbed</span>
+              <span>Open the sensors screen</span>
               <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
             </div>
           </div>
@@ -200,7 +180,7 @@ export const LandingPage: React.FC = () => {
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
               <span className="flex items-center gap-1.5">
                 <Cpu className="w-3.5 h-3.5 text-teal-400" />
-                <span>EXPLAINABLE AI ENGINE</span>
+                <span>Danger score</span>
               </span>
               <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${
                 riskAnalysis.score >= 75
@@ -217,14 +197,14 @@ export const LandingPage: React.FC = () => {
                 <span className="text-lg font-bold font-mono text-white tracking-tight">
                   {riskAnalysis.score} / 100
                 </span>
-                <span className="text-xs font-mono text-slate-400">THREAT INDEX</span>
+                <span className="text-xs text-slate-400">out of 100</span>
               </div>
-              <div className="text-[11px] text-slate-400 font-mono mt-0.5 truncate">
-                Factors: {riskAnalysis.breakdown.length} Dynamic Weights Active
+              <div className="text-[11px] text-slate-400 mt-0.5 truncate">
+                Based on {riskAnalysis.breakdown.length} everyday factors
               </div>
             </div>
             <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-teal-300 group-hover:text-teal-200">
-              <span>Inspect factor attribution</span>
+              <span>See how it’s worked out</span>
               <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
             </div>
           </div>
@@ -237,52 +217,52 @@ export const LandingPage: React.FC = () => {
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
               <span className="flex items-center gap-1.5">
                 <Activity className="w-3.5 h-3.5 text-rose-400" />
-                <span>CAD DISPATCH MESH</span>
+                <span>Help desk</span>
               </span>
               <span className="text-[10px] text-slate-300 font-bold px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.1]">
-                112 INTEGRATION
+                SIMULATED
               </span>
             </div>
             <div className="mt-3">
               <div className="flex items-baseline gap-2">
                 <span className="text-lg font-bold font-mono text-white tracking-tight">
-                  {activeIncidentCount} ACTIVE
+                  {activeIncidentCount} open
                 </span>
-                <span className="text-xs font-mono text-slate-400">| {readyResponderCount} READY</span>
+                <span className="text-xs text-slate-400">· {readyResponderCount} helpers free</span>
               </div>
-              <div className="text-[11px] text-slate-400 font-mono mt-0.5">
-                Avg Response: 3.4 min (Pink Squad)
+              <div className="text-[11px] text-slate-400 mt-0.5">
+                Typical arrival: about 3 minutes
               </div>
             </div>
             <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-teal-300 group-hover:text-teal-200">
-              <span>View CAD dispatch board</span>
+              <span>Open the help desk</span>
               <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Interactive Hackathon Evaluator Testbed (Direct Interrupts) */}
+      {/* Try a safety test */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-6 rounded-2xl bg-obsidian-900/90 border border-teal-500/30 shadow-tactile-lg space-y-5">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-white/[0.08]">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-teal-400" />
-                <h2 className="text-sm font-bold font-mono uppercase tracking-wider text-white">
-                  Evaluator Simulation Harness & Hardware Interrupt Triggers
+                <h2 className="text-base font-bold text-white">
+                  Try a safety test
                 </h2>
               </div>
-              <p className="text-xs text-slate-400">
-                Click any emergency trigger below to simulate zero-touch distress events and observe end-to-end CAD dispatch.
+              <p className="text-sm text-slate-400">
+                Tap any button below to practise what happens in an emergency. Watch the alert travel to the Help desk screen.
               </p>
             </div>
             <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400">
               <span className="px-2 py-1 rounded bg-obsidian-950 border border-white/[0.08] text-teal-300">
-                AI Threat: {riskAnalysis.score}/100
+                Danger score: {riskAnalysis.score}/100
               </span>
               <span className="px-2 py-1 rounded bg-obsidian-950 border border-white/[0.08] text-slate-300">
-                Pulse: {iotData.connected ? `${iotData.heartRate} BPM` : 'DISCONNECTED'}
+                Heart: {iotData.connected ? `${iotData.heartRate} bpm` : 'not connected'}
               </span>
             </div>
           </div>
@@ -296,11 +276,11 @@ export const LandingPage: React.FC = () => {
               className="p-3.5 rounded-xl bg-obsidian-950 hover:bg-rose-950/40 border border-rose-500/30 hover:border-rose-500/70 text-left transition-all group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold font-mono text-rose-300 uppercase">Panic SOS Interrupt</span>
+                <span className="text-sm font-bold text-rose-300">Press SOS</span>
                 <span className="w-2 h-2 rounded-full bg-rose-500 group-hover:animate-ping" />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1 leading-snug">
-                Launches 5s abort window with audible warning pips and automatic dispatch.
+              <p className="text-xs text-slate-400 mt-1 leading-snug">
+                Starts a 5-second timer. Cancel if it was an accident — otherwise help is sent.
               </p>
             </button>
 
@@ -312,11 +292,11 @@ export const LandingPage: React.FC = () => {
               className="p-3.5 rounded-xl bg-obsidian-950 hover:bg-teal-950/40 border border-teal-500/30 hover:border-teal-500/70 text-left transition-all"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold font-mono text-teal-300 uppercase">3.8G Hard Fall Impact</span>
+                <span className="text-sm font-bold text-teal-300">Simulate a fall</span>
                 <HeartPulse className="w-3.5 h-3.5 text-teal-400" />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1 leading-snug">
-                Simulates abrupt inertial drop and sudden post-impact zero-motion immobilization.
+              <p className="text-xs text-slate-400 mt-1 leading-snug">
+                Pretend the wearable detects a hard fall and the person can’t move afterwards.
               </p>
             </button>
 
@@ -328,11 +308,11 @@ export const LandingPage: React.FC = () => {
               className="p-3.5 rounded-xl bg-obsidian-950 hover:bg-amber-950/40 border border-amber-500/30 hover:border-amber-500/70 text-left transition-all"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold font-mono text-amber-300 uppercase">Physical Altercation Shake</span>
+                <span className="text-sm font-bold text-amber-300">Simulate a struggle</span>
                 <Sliders className="w-3.5 h-3.5 text-amber-400" />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1 leading-snug">
-                Simulates high-frequency chaotic IMU oscillation and elevated struggle heart rate.
+              <p className="text-xs text-slate-400 mt-1 leading-snug">
+                Pretend the wearable feels violent shaking and a racing heartbeat.
               </p>
             </button>
 
@@ -344,28 +324,28 @@ export const LandingPage: React.FC = () => {
               className="p-3.5 rounded-xl bg-obsidian-950 hover:bg-purple-950/40 border border-purple-500/30 hover:border-purple-500/70 text-left transition-all"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold font-mono text-purple-300 uppercase">Covert Escape Call</span>
+                <span className="text-sm font-bold text-purple-300">Fake call from Mom</span>
                 <PhoneCall className="w-3.5 h-3.5 text-purple-400" />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1 leading-snug">
-                Simulates realistic incoming phone call screen with interactive dialogue script.
+              <p className="text-xs text-slate-400 mt-1 leading-snug">
+                Shows a pretend incoming call with words to help you leave a situation safely.
               </p>
             </button>
           </div>
         </div>
       </section>
 
-      {/* Engineering Architectural Subsystems (4 Technical Columns) */}
+      {/* How it is built — optional detail */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Layers className="w-4 h-4 text-teal-400" />
-            <h2 className="text-base font-bold font-mono uppercase tracking-wider text-white">
-              System Architecture & Engineered Subsystems
+            <h2 className="text-base font-bold text-white">
+              How SHIELD is built <span className="font-normal text-slate-500">(optional detail)</span>
             </h2>
           </div>
-          <p className="text-xs text-slate-400">
-            Four decoupled layers operating in synchrony to deliver a hardened, offline-first safety perimeter.
+          <p className="text-sm text-slate-400">
+            Four simple parts work together — sensing, deciding, sending help, and protecting you.
           </p>
         </div>
 
@@ -448,65 +428,65 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Incident State Machine Diagram */}
+      {/* What happens after you press SOS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-6 rounded-2xl bg-obsidian-900 border border-white/[0.08] space-y-6 shadow-tactile">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <h3 className="text-sm font-bold font-mono uppercase tracking-wider text-white">
-                Deterministic Incident State Machine
+              <h3 className="text-base font-bold text-white">
+                What happens after you press SOS
               </h3>
-              <p className="text-xs text-slate-400">
-                Zero-delay progression from biometric sensor anomaly to verified responder escort.
+              <p className="text-sm text-slate-400">
+                Four steps, from the first press to someone reaching you.
               </p>
             </div>
-            <span className="text-[10px] font-mono text-teal-300 px-2 py-1 rounded bg-teal-500/10 border border-teal-500/20">
-              STATE: FORMAL FINITE AUTOMATON
+            <span className="text-[10px] text-teal-300 px-2 py-1 rounded bg-teal-500/10 border border-teal-500/20">
+              SIMULATION
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div className="p-4 rounded-xl bg-obsidian-950 border border-white/[0.08] space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-teal-300">01 // DETECT</span>
+                <span className="text-xs font-bold text-teal-300">STEP 1</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
               </div>
-              <h4 className="text-xs font-bold text-white">Multi-Modal Ingestion</h4>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Sensor interrupt (3.8G shock, tachycardia, STT safe word "SHIELD", or tactile panic button).
+              <h4 className="text-sm font-bold text-white">An alert starts</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                You press SOS, your wearable detects a fall, or you say your safe word.
               </p>
             </div>
 
             <div className="p-4 rounded-xl bg-obsidian-950 border border-white/[0.08] space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-amber-300">02 // VERIFY</span>
+                <span className="text-xs font-bold text-amber-300">STEP 2</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
               </div>
-              <h4 className="text-xs font-bold text-white">5s Grace Window</h4>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Audible 880Hz countdown pips. User can abort accidental triggers via 4-digit master PIN.
+              <h4 className="text-sm font-bold text-white">5 seconds to cancel</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                A beep counts down. If you pressed by mistake, enter PIN 4321 to stop it.
               </p>
             </div>
 
             <div className="p-4 rounded-xl bg-obsidian-950 border border-white/[0.08] space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-rose-300">03 // DISPATCH</span>
+                <span className="text-xs font-bold text-rose-300">STEP 3</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
               </div>
-              <h4 className="text-xs font-bold text-white">Dual-Tier Broadcast</h4>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Instant GPS telemetry pushed to CAD dispatch queue and automated simulated SMS to emergency contacts.
+              <h4 className="text-sm font-bold text-white">Help is alerted</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Your location appears on the Help desk screen and a practice text goes to your contacts.
               </p>
             </div>
 
             <div className="p-4 rounded-xl bg-obsidian-950 border border-white/[0.08] space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-emerald-300">04 // RESOLVE</span>
+                <span className="text-xs font-bold text-emerald-300">STEP 4</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               </div>
-              <h4 className="text-xs font-bold text-white">Safe Escort & Audit</h4>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Nearest patrol unit arrives on scene. Tamper-evident incident record saved to immutable audit history.
+              <h4 className="text-sm font-bold text-white">You are safe</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                The nearest helper is marked as arrived, and the alert is saved in History.
               </p>
             </div>
           </div>

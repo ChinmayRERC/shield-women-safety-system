@@ -10,6 +10,8 @@ import { WearableSimulator } from './components/IoTSimulator/WearableSimulator';
 import { IncidentCommand } from './components/AdminDashboard/IncidentCommand';
 import { IncidentHistory } from './components/History/IncidentHistory';
 import { JudgePitchView } from './components/Pitch/JudgePitchView';
+import { QuickStartGuide } from './components/QuickStartGuide';
+import { HardwareBridge } from './components/HardwareBridge';
 import {
   Shield,
   AlertOctagon,
@@ -29,10 +31,10 @@ const AppContent: React.FC = () => {
   const mobileNavItems = [
     { id: 'user', label: 'Safety', icon: AlertOctagon },
     { id: 'map', label: 'Map', icon: MapPin },
-    { id: 'ai-lab', label: 'AI Lab', icon: Cpu },
-    { id: 'iot', label: 'IoT', icon: Radio },
-    { id: 'admin', label: 'CAD', icon: Activity },
-    { id: 'pitch', label: 'Pitch', icon: Award },
+    { id: 'ai-lab', label: 'Risk', icon: Cpu },
+    { id: 'iot', label: 'Sensors', icon: Radio },
+    { id: 'admin', label: 'Desk', icon: Activity },
+    { id: 'pitch', label: 'About', icon: Award },
   ];
 
   return (
@@ -43,8 +45,12 @@ const AppContent: React.FC = () => {
       {/* Main Navbar */}
       <Navbar />
 
+      {/* Plain-English guide and ESP8266 link (guide is a modal, bridge is invisible) */}
+      <QuickStartGuide />
+      <HardwareBridge />
+
       {/* Active Tab Router */}
-      <main className="flex-1 pt-6">
+      <main id="main-content" className="flex-1 pt-6 pb-20 lg:pb-6">
         {activeTab === 'landing' && <LandingPage />}
         {activeTab === 'user' && <UserSafetyDashboard />}
         {activeTab === 'map' && <IncidentMap />}

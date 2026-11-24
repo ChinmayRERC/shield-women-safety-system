@@ -18,6 +18,7 @@ import {
   Cpu,
 } from 'lucide-react';
 import { useSafety } from '../../context/SafetyContext';
+import { HardwareConnectionCard } from '../HardwareConnectionCard';
 
 export const WearableSimulator: React.FC = () => {
   const {
@@ -173,38 +174,39 @@ export const WearableSimulator: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 pb-16">
-      {/* Precision Instrument Header */}
+      {/* Simple sensor screen header */}
       <div className="p-5 rounded-2xl bg-obsidian-900 border border-white/[0.08] shadow-tactile flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Radio className="w-4 h-4 text-teal-400" />
-            <h2 className="text-sm font-bold font-mono uppercase tracking-wider text-white">
-              Bio-Inertial Telemetry Testbed & Logic Analyzer
+            <h2 className="text-base font-bold text-white">
+              Sensors — watch the heartbeat and movements
             </h2>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-teal-500/10 text-teal-300 border border-teal-500/20">
-              SPEC: BLE 5.2 GATT
-            </span>
           </div>
-          <p className="text-xs text-slate-400 max-w-2xl">
-            Real-time biometric oscilloscope and IMU vector analyzer for smart rings, bands, and pendants.
-            Detects 3.8G impact thresholds, acute tachycardia, and physical struggle vectors.
+          <p className="text-sm text-slate-400 max-w-2xl">
+            These are pretend sensor readings for practising. Try the buttons on the right to see what a
+            fall, a struggle or a fast heartbeat looks like. Scroll down to connect a real ESP8266.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             onClick={toggleIotConnection}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold border flex items-center gap-2 transition-all ${
+            title={iotData.connected ? 'Turn the pretend sensor off' : 'Turn the pretend sensor on'}
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold border flex items-center gap-2 transition-all ${
               iotData.connected
                 ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30 shadow-tactile'
                 : 'bg-rose-500/10 text-rose-300 border-rose-500/30'
             }`}
           >
             {iotData.connected ? <Wifi className="w-3.5 h-3.5 text-emerald-400" /> : <WifiOff className="w-3.5 h-3.5 text-rose-400" />}
-            <span>{iotData.connected ? 'LINK: ONLINE (GATT OK)' : 'LINK: DISCONNECTED'}</span>
+            <span>{iotData.connected ? 'SIMULATED DEVICE: ON' : 'SIMULATED DEVICE: OFF'}</span>
           </button>
         </div>
       </div>
+
+      {/* Real ESP8266 hardware */}
+      <HardwareConnectionCard />
 
       {/* Main Grid: Dual Channel Scope + Attitude HUD + Testbench Interrupts */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -217,20 +219,16 @@ export const WearableSimulator: React.FC = () => {
               <div className="flex items-center gap-3">
                 <span className="text-teal-400 font-bold flex items-center gap-1.5">
                   <HeartPulse className="w-3.5 h-3.5 text-teal-400 animate-pulse" />
-                  <span>CH1: PPG Photoplethysmography (250Hz)</span>
-                </span>
-                <span className="text-slate-500">|</span>
-                <span className="text-slate-300">
-                  MAC: <strong className="text-white">C4:8E:22:90:F1</strong>
+                  <span>Heartbeat (pretend)</span>
                 </span>
               </div>
 
               <div className="flex items-center gap-2 text-[11px]">
                 <span className="px-2 py-0.5 rounded bg-obsidian-950 border border-white/[0.08] text-slate-300">
-                  BAT: <strong className="text-emerald-400">{iotData.battery}%</strong>
+                  Battery: <strong className="text-emerald-400">{iotData.battery}%</strong>
                 </span>
                 <span className="px-2 py-0.5 rounded bg-obsidian-950 border border-white/[0.08] text-slate-300">
-                  RSSI: <strong className="text-teal-300">{iotData.signalStrength} dBm</strong>
+                  Signal: <strong className="text-teal-300">{iotData.signalStrength} dBm</strong>
                 </span>
               </div>
             </div>
@@ -246,21 +244,21 @@ export const WearableSimulator: React.FC = () => {
 
               {/* Scope Calibration Watermark Overlays */}
               <div className="absolute top-2 left-3 text-[10px] font-mono text-teal-400/70 pointer-events-none space-y-0.5">
-                <div>TIME/DIV: {200 / sweepMultiplier}ms</div>
-                <div>VOLT/DIV: {0.5 / gainMultiplier}mV</div>
+                <div>Speed: {200 / sweepMultiplier} ms</div>
+                <div>Zoom: {0.5 / gainMultiplier} mV</div>
               </div>
 
               <div className="absolute top-2 right-3 text-[11px] font-mono pointer-events-none text-right">
                 <div className="text-white font-bold text-sm tracking-tight">
-                  {iotData.connected ? `${iotData.heartRate} BPM` : 'FLATLINE'}
+                  {iotData.connected ? `${iotData.heartRate} bpm` : 'NO SIGNAL'}
                 </div>
                 <div className="text-[10px]">
                   {iotData.heartRate > 130 ? (
-                    <span className="text-rose-400 font-bold animate-pulse">ACUTE TACHYCARDIA</span>
+                    <span className="text-rose-400 font-bold animate-pulse">HEART RACING</span>
                   ) : iotData.heartRate > 100 ? (
-                    <span className="text-amber-400 font-bold">ELEVATED EXERTION</span>
+                    <span className="text-amber-400 font-bold">A LITTLE FAST</span>
                   ) : (
-                    <span className="text-emerald-400 font-bold">NOMINAL SINUS RHYTHM</span>
+                    <span className="text-emerald-400 font-bold">NORMAL</span>
                   )}
                 </div>
               </div>
@@ -278,26 +276,26 @@ export const WearableSimulator: React.FC = () => {
                   }`}
                 >
                   {isFrozen ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
-                  <span>{isFrozen ? 'RESUME SWEEP' : 'FREEZE TRACE'}</span>
+                  <span>{isFrozen ? 'Resume' : 'Freeze'}</span>
                 </button>
 
                 <button
                   onClick={() => setSweepMultiplier((prev) => (prev === 1 ? 2 : 1))}
                   className="px-2.5 py-1 rounded-md bg-obsidian-950 text-slate-300 border border-white/[0.08] hover:text-white text-[11px]"
                 >
-                  TIMEBASE: {sweepMultiplier}X
+                  Speed: {sweepMultiplier}×
                 </button>
 
                 <button
                   onClick={() => setGainMultiplier((prev) => (prev === 1 ? 1.5 : 1))}
                   className="px-2.5 py-1 rounded-md bg-obsidian-950 text-slate-300 border border-white/[0.08] hover:text-white text-[11px]"
                 >
-                  GAIN: {gainMultiplier}X
+                  Zoom: {gainMultiplier}×
                 </button>
               </div>
 
               <div className="text-[11px] text-slate-500">
-                SWEEP RATE: 250 SPS • DOWNSAMPLED FOR DISPLAY
+                Pretend reading — no real sensor attached
               </div>
             </div>
           </div>
@@ -307,10 +305,10 @@ export const WearableSimulator: React.FC = () => {
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] text-xs font-mono">
               <div className="flex items-center gap-2">
                 <Sliders className="w-3.5 h-3.5 text-teal-400" />
-                <span className="font-bold uppercase text-white">3-Axis IMU Dynamic Attitude Reticle</span>
+                <span className="font-bold text-white">Movement detector</span>
               </div>
               <div className="text-teal-300 font-bold">
-                VECTOR MAGNITUDE: {iotData.accelerometer.magnitude} G
+                Movement: {iotData.accelerometer.magnitude} G
               </div>
             </div>
 
@@ -348,7 +346,7 @@ export const WearableSimulator: React.FC = () => {
                   <span className="absolute left-1 text-[8px] font-mono text-slate-500">-X</span>
                 </div>
                 <span className="text-[10px] font-mono text-slate-400 mt-2">
-                  GIMBAL DEFLECTION ({normX > 0 ? '+' : ''}{normX.toFixed(2)}, {normY > 0 ? '+' : ''}{normY.toFixed(2)})
+                  Tilt ({normX > 0 ? '+' : ''}{normX.toFixed(2)}, {normY > 0 ? '+' : ''}{normY.toFixed(2)})
                 </span>
               </div>
 
@@ -357,7 +355,7 @@ export const WearableSimulator: React.FC = () => {
                 {/* X Axis */}
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-400 mb-1">
-                    <span>X-AXIS (LATERAL):</span>
+                    <span>Side to side (X):</span>
                     <span className="text-white font-bold">{iotData.accelerometer.x} G</span>
                   </div>
                   <div className="h-1.5 w-full bg-obsidian-950 rounded-full overflow-hidden border border-white/[0.06]">
@@ -371,7 +369,7 @@ export const WearableSimulator: React.FC = () => {
                 {/* Y Axis */}
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Y-AXIS (SAGITTAL):</span>
+                    <span>Front to back (Y):</span>
                     <span className="text-white font-bold">{iotData.accelerometer.y} G</span>
                   </div>
                   <div className="h-1.5 w-full bg-obsidian-950 rounded-full overflow-hidden border border-white/[0.06]">
@@ -385,7 +383,7 @@ export const WearableSimulator: React.FC = () => {
                 {/* Z Axis */}
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Z-AXIS (GRAVITATIONAL / IMPACT):</span>
+                    <span>Up / down — impact (Z):</span>
                     <span className={`font-bold ${iotData.accelerometer.z > 3.0 ? 'text-rose-400' : 'text-white'}`}>
                       {iotData.accelerometer.z} G
                     </span>
@@ -402,8 +400,8 @@ export const WearableSimulator: React.FC = () => {
 
                 {/* 3.8G Warning Flag */}
                 <div className="pt-2 text-[10px] text-slate-500 flex justify-between">
-                  <span>THRESHOLD: 3.8G DECELERATION</span>
-                  <span className="text-teal-400">KALMAN FILTER: ACTIVE</span>
+                  <span>Fall alert at 3.8 G</span>
+                  <span className="text-teal-400">Reading smoothed</span>
                 </div>
               </div>
             </div>
@@ -417,12 +415,12 @@ export const WearableSimulator: React.FC = () => {
             <div className="space-y-1 pb-3 border-b border-white/[0.06]">
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-teal-400" />
-                <h3 className="text-xs font-bold font-mono uppercase tracking-wider text-white">
-                  Hardware Distress Interrupts
+                <h3 className="text-sm font-bold text-white">
+                  Try a sensor event
                 </h3>
               </div>
-              <p className="text-[11px] text-slate-400 font-sans">
-                Simulate critical sensor thresholds to trigger the 5s abort window.
+              <p className="text-xs text-slate-400">
+                Tap one to see what happens. Each starts the 5-second cancel window.
               </p>
             </div>
 
@@ -433,13 +431,13 @@ export const WearableSimulator: React.FC = () => {
                 className="w-full p-3 rounded-xl bg-obsidian-950 hover:bg-rose-950/40 border border-rose-500/40 hover:border-rose-500/80 text-left transition-all group"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold font-mono text-rose-300">SIMULATE 3.8G FALL</span>
+                  <span className="text-sm font-bold text-rose-300">Pretend I fell down</span>
                   <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">
                     IMPACT
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1">
-                  Deceleration spike &gt;3.8G with subsequent zero-movement state.
+                <p className="text-xs text-slate-400 mt-1">
+                  A hard drop followed by no movement.
                 </p>
               </button>
 
@@ -449,13 +447,13 @@ export const WearableSimulator: React.FC = () => {
                 className="w-full p-3 rounded-xl bg-obsidian-950 hover:bg-amber-950/40 border border-amber-500/40 hover:border-amber-500/80 text-left transition-all group"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold font-mono text-amber-300">SIMULATE STRUGGLE SHAKE</span>
+                  <span className="text-sm font-bold text-amber-300">Pretend I’m struggling</span>
                   <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300">
                     SHAKE
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1">
-                  Rapid wrestling acceleration pattern on X and Y axes.
+                <p className="text-xs text-slate-400 mt-1">
+                  Fast, jerky movement back and forth.
                 </p>
               </button>
 
@@ -465,13 +463,13 @@ export const WearableSimulator: React.FC = () => {
                 className="w-full p-3 rounded-xl bg-obsidian-950 hover:bg-purple-950/40 border border-purple-500/40 hover:border-purple-500/80 text-left transition-all group"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold font-mono text-purple-300">TACHYCARDIA SURGE (148 BPM)</span>
+                  <span className="text-sm font-bold text-purple-300">Pretend my heart races</span>
                   <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300">
                     STRESS
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1">
-                  Acute adrenaline pulse surge under stationary posture.
+                <p className="text-xs text-slate-400 mt-1">
+                  Heartbeat jumps to about 148 bpm.
                 </p>
               </button>
 
@@ -484,13 +482,13 @@ export const WearableSimulator: React.FC = () => {
                 className="w-full p-3 rounded-xl bg-obsidian-950 hover:bg-teal-950/40 border border-teal-500/40 hover:border-teal-500/80 text-left transition-all group"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold font-mono text-teal-300">SMART RING TACTILE CROWN</span>
+                  <span className="text-sm font-bold text-teal-300">Pretend I pressed the device button</span>
                   <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300">
                     CLICK
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1">
-                  Physical double-click distress trigger on device bezel.
+                <p className="text-xs text-slate-400 mt-1">
+                  The same action as pressing SOS twice on the wearable.
                 </p>
               </button>
 
@@ -500,7 +498,7 @@ export const WearableSimulator: React.FC = () => {
                 className="w-full py-2.5 rounded-xl bg-obsidian-950 hover:bg-obsidian-850 text-slate-300 hover:text-white border border-white/[0.08] text-xs font-mono font-semibold flex items-center justify-center gap-2 transition-all mt-2"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>CALIBRATE TO BASELINE (74 BPM / 1.0G)</span>
+                <span>Reset to normal (74 bpm)</span>
               </button>
             </div>
           </div>
@@ -510,7 +508,7 @@ export const WearableSimulator: React.FC = () => {
             <div className="flex items-center justify-between text-xs font-mono text-slate-400 pb-2 border-b border-white/[0.06]">
               <span className="flex items-center gap-1.5">
                 <Terminal className="w-3.5 h-3.5 text-teal-400" />
-                <span>RAW BLE GATT STREAM</span>
+                <span>Simulated sensor messages</span>
               </span>
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             </div>
@@ -524,7 +522,7 @@ export const WearableSimulator: React.FC = () => {
                   </div>
                 ))
               ) : (
-                <div className="text-slate-500 italic">Awaiting packet frames...</div>
+                <div className="text-slate-500 italic">Waiting for readings…</div>
               )}
             </div>
           </div>
